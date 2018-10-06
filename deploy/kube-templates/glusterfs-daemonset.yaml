@@ -72,7 +72,7 @@ spec:
             command:
             - "/bin/bash"
             - "-c"
-            - "if command -v /usr/local/bin/status-probe.sh; then /usr/local/bin/status-probe.sh readiness; else systemctl status glusterd.service; fi"
+            - "systemctl status glusterd.service"
           periodSeconds: 25
           successThreshold: 1
           failureThreshold: 50
@@ -83,7 +83,7 @@ spec:
             command:
             - "/bin/bash"
             - "-c"
-            - "if command -v /usr/local/bin/status-probe.sh; then /usr/local/bin/status-probe.sh liveness; else systemctl status glusterd.service; fi"
+            - "systemctl status glusterd.service"
           periodSeconds: 25
           successThreshold: 1
           failureThreshold: 50
