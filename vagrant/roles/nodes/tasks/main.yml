@@ -22,14 +22,14 @@
   - custom_registry_gcr | default(false)
 
 - name: Pull GlusterFS Docker image
-  command: docker pull gluster/gluster-centos:latest
+  command: docker pull rafayedge/gluster-centos:v1
   register: task_result
   until: task_result.rc == 0
   retries: 5
   delay: 1
 
 - name: Pull heketi Docker image
-  command: docker pull heketi/heketi:dev
+  command: rafayedge/heketi:v1
   register: task_result
   until: task_result.rc == 0
   retries: 5
