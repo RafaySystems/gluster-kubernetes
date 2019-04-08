@@ -60,11 +60,15 @@ spec:
           mountPath: "/etc/ssl"
           readOnly: true
         - name: kernel-modules
-          mountPath: "/usr/lib/modules"
+          mountPath: "/lib/modules"
           readOnly: true
         securityContext:
           capabilities: {}
           privileged: true
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+            name: monitoring-8080
         readinessProbe:
           timeoutSeconds: 3
           initialDelaySeconds: 40
@@ -72,7 +76,7 @@ spec:
             command:
             - "/bin/bash"
             - "-c"
-            - "systemctl status glusterd.service"
+            - "if command -v /usr/local/bin/status-probe.sh; then /usr/local/bin/status-probe.sh readiness; else systemctl status glusterd.service; fi"
           periodSeconds: 25
           successThreshold: 1
           failureThreshold: 50
@@ -83,7 +87,7 @@ spec:
             command:
             - "/bin/bash"
             - "-c"
-            - "systemctl status glusterd.service"
+            - "if command -v /usr/local/bin/status-probe.sh; then /usr/local/bin/status-probe.sh readiness; else systemctl status glusterd.service; fi"
           periodSeconds: 25
           successThreshold: 1
           failureThreshold: 50
@@ -118,4 +122,4 @@ spec:
           path: "/etc/ssl"
       - name: kernel-modules
         hostPath:
-          path: "/usr/lib/modules"
+          path: "/lib/modules"
